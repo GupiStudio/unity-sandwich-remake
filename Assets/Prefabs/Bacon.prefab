@@ -12,9 +12,12 @@ GameObject:
   - component: {fileID: 931107395545953064}
   - component: {fileID: 6906125260182687697}
   - component: {fileID: 7360912134366123632}
+  - component: {fileID: 3016919620456256059}
+  - component: {fileID: 7022821298522502839}
+  - component: {fileID: -5503880227802849343}
   m_Layer: 0
   m_Name: Bacon
-  m_TagString: Ingredients
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,3 +96,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0.05, z: 0}
+--- !u!114 &3016919620456256059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182423098906426125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378e0d2f35e85fa44957893848bda4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7022821298522502839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182423098906426125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8da7f8acfd8b249821f3dadfceb1a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flipSpeed:
+    UseContant: 0
+    ConstantValue: 500
+    FloatVariable: {fileID: 11400000, guid: 04313715acf63f24a9a01a5f21dc6cd1, type: 2}
+--- !u!114 &-5503880227802849343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182423098906426125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce68085c20674e4eb3b68f03bf95c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allChildrens: []
