@@ -8,10 +8,15 @@ public class GameManager : MonoBehaviour
     public static GameManager Singleton;
     public Transform ParentIngredients;
 
+    [SerializeField] private IntVariableSO _coinCount;
+
     [HideInInspector] public bool IngredientIsAnimating;
 
     private Stack[] _allStackInScene;
     private Transform _moreHeight;
+
+    private UserInterfaceController _uiController;
+    private LevelManager _levelManager;
 
     // Replay Vars
     private List<ReplaySample> _replaySamples = new List<ReplaySample>();
@@ -25,19 +30,20 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
+
+        _uiController = FindObjectOfType<UserInterfaceController>();
+        _levelManager = GetComponent<LevelManager>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnDisable()
+    {
+        Singleton = null;
+    }
+
+    private void Start()
     {
         _moreHeight = transform;
         _moreHeight.position = Vector3.zero;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -69,16 +75,21 @@ public class GameManager : MonoBehaviour
         if (_moreHeight.name.Contains("Bread") && _stack.Childrens[0].name.Contains("Bread"))
         {
             Debug.Log("You win");
+
+            _coinCount.Value += _levelManager.GetLevelCoinReward();
+            _uiController.ShowWinScreenUI();
         }
         else
         {
+            // note: in the game, there is no lose screen. player just need to retry
             Debug.Log("You Lose");
         }
     }
 
-    private void OnDisable()
+    public void LoadNextLevel()
     {
-        Singleton = null;
+        _levelManager.LoadNextLevel();
+        _uiController.ShowGameplayUI();
     }
 
     public void StartReplaySampling(Transform targetIngredient)
@@ -107,7 +118,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void ReplaySampler ()
+    private void ReplaySampler()
     {
         if (_sampleTheTransform)
         {
@@ -115,7 +126,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void RewindReplayPlayer()
+    private void RewindReplayPlayer()
     {
         if (_doOneRetry)
         {

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 850c3af53f6d4d6489c1f5c22424807e, type: 3}
-  m_Name: StackRotationSpeed
+  m_Script: {fileID: 11500000, guid: c736629a6078b094dba0411f551457cb, type: 3}
+  m_Name: CommonLevelCoinReward
   m_EditorClassIdentifier: 
-  Value: 500
+  Value: 18
