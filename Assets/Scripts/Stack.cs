@@ -24,7 +24,7 @@ public class Stack : MonoBehaviour
         }
     }
 
-    public void UpdateChildrens()
+    public void UpdateStack()
     {
         _childrens = GetComponentsInChildren<Transform>();
 
