@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 850c3af53f6d4d6489c1f5c22424807e, type: 3}
-  m_Name: IngredientFlipSpeed
+  m_Name: FlipDuration
   m_EditorClassIdentifier: 
-  Value: 1500
+  Value: 0.4

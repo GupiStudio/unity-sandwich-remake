@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Singleton;
+    public static GameManager Instance;
     public Transform ParentIngredients;
 
     [SerializeField] private IntVariableSO _coinCount;
+    [SerializeField] private FloatVariableSO _flipDuration;
 
     [HideInInspector] public bool IngredientIsAnimating;
 
@@ -25,9 +26,11 @@ public class GameManager : MonoBehaviour
 
     private bool _doOneRetry;
 
+    public float FlipDuration => _flipDuration.Value;
+
     private void Awake()
     {
-        Singleton = this;
+        Instance = this;
 
         _uiController = FindObjectOfType<UserInterfaceController>();
         _levelManager = GetComponent<LevelManager>();
@@ -35,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        Singleton = null;
+        Instance = null;
     }
 
     private void Start()
@@ -100,7 +103,6 @@ public class GameManager : MonoBehaviour
     {
         _recordingTarget = targetIngredient;
         _sampleTheTransform = true;
-        //StartCoroutine(ReplaySampler(targetIngredient));
     }
 
     public void StopReplaySamples()
@@ -117,7 +119,6 @@ public class GameManager : MonoBehaviour
     {
         if (!_doOneRetry)
         {
-            //StartCoroutine(RewindReplayPlayer());
             _doOneRetry = true;
         }
     }
