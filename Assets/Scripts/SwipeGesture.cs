@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwipeGesture : MonoBehaviour
 {
@@ -28,10 +25,7 @@ public class SwipeGesture : MonoBehaviour
 
         if (!IsTouchHit(touch.position, ref _hit)) { return; }
 
-        if (touch.phase == TouchPhase.Began)
-        {
-            _startPosition = touch.position;
-        }
+        DetermineStartPosition(touch);
 
         if (touch.phase == TouchPhase.Moved)
         {
@@ -52,6 +46,10 @@ public class SwipeGesture : MonoBehaviour
             {
                 ingredient.Flip(swipeDirection);
             }
+            else
+            {
+                Debug.LogError("SwipeGesture: ingredient is null");
+            }
 
             _isSwiping = true;
         }
@@ -71,5 +69,13 @@ public class SwipeGesture : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(touchPosition);
         return Physics.Raycast(ray, out hit);
+    }
+
+    private void DetermineStartPosition(Touch touch)
+    {
+        if (touch.phase == TouchPhase.Began)
+        {
+            _startPosition = touch.position;
+        }
     }
 }

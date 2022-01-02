@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ingredient : MonoBehaviour
 {
-    private float _maxDistance;
+    private float _maxDistance = 1.0f;
     private Collider _collider;
     private RaycastHit _hit;
     private GameObject _hitObject;
@@ -16,12 +14,7 @@ public class Ingredient : MonoBehaviour
         _collider = GetComponent<Collider>();
     }
 
-    void Start()
-    {
-        _maxDistance = 1.0f;        
-    }
-
-    public bool CanSwipeLeft
+    public bool CanFlipLeft
     {
         get
         {
@@ -43,7 +36,7 @@ public class Ingredient : MonoBehaviour
         }
     }
 
-    public bool CanSwipeRight
+    public bool CanFlipRight
     {
         get
         {
@@ -65,7 +58,7 @@ public class Ingredient : MonoBehaviour
         }
     }
 
-    public bool CanSwipeUp
+    public bool CanFlipUp
     {
         get
         {
@@ -87,7 +80,7 @@ public class Ingredient : MonoBehaviour
         }
     }
 
-    public bool CanSwipeDown
+    public bool CanFlipDown
     {
         get
         {

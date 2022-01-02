@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IngredientController : MonoBehaviour
@@ -42,26 +41,26 @@ public class IngredientController : MonoBehaviour
     {
         Debug.Log("About to Orbit");
 
-        if (!_ingredient.CanSwipeUp /*|| GameManager.singleton.ingredientIsAnimating*/) { return; }
+        if (!_ingredient.CanFlipUp || GameManager.Singleton.IngredientIsAnimating) { return; }
 
         Debug.Log("Orbiting");
 
-        Stack stack = _ingredient.HitObject.GetComponent<Stack>();
-        Stack myStack = GetComponent<Stack>();
+        Stack targetStack = _ingredient.HitObject.GetComponent<Stack>();
+        Stack currectStack = GetComponent<Stack>();
         
         Vector3 sideUp = new Vector3(
             transform.position.x, 
-            0.05f * stack.Childrens.Length + 0.05f * myStack.Childrens.Length, 
+            0.05f * targetStack.Childrens.Length + 0.05f * currectStack.Childrens.Length, 
             transform.position.z - transform.lossyScale.z / 2);
         
-        StartCoroutine(RotationAroundSide(sideUp, _ingredient.HitObject, Vector3.left, _flipSpeed.Value));
+        StartCoroutine(RotateAroundSide(sideUp, _ingredient.HitObject, Vector3.left, _flipSpeed.Value));
     }
 
     private void FlipRight()
     {
         Debug.Log("About to Orbit");
 
-        if (!_ingredient.CanSwipeRight /*|| GameManager.singleton.ingredientIsAnimating*/) { return; }
+        if (!_ingredient.CanFlipRight || GameManager.Singleton.IngredientIsAnimating) { return; }
 
         Debug.Log("Orbiting");
         
@@ -73,48 +72,48 @@ public class IngredientController : MonoBehaviour
             0.05f * targetStack.Childrens.Length + 0.05f * currentStack.Childrens.Length, 
             transform.position.z);
         
-        StartCoroutine(RotationAroundSide(sideRight, _ingredient.HitObject, Vector3.forward, _flipSpeed.Value));
+        StartCoroutine(RotateAroundSide(sideRight, _ingredient.HitObject, Vector3.forward, _flipSpeed.Value));
     }
 
     private void FlipDown()
     {
         Debug.Log("About to Orbit");
 
-        if (!_ingredient.CanSwipeDown /*|| GameManager.singleton.ingredientIsAnimating*/) { return; }
+        if (!_ingredient.CanFlipDown || GameManager.Singleton.IngredientIsAnimating) { return; }
 
         Debug.Log("Orbiting");
 
-        Stack stack = _ingredient.HitObject.GetComponent<Stack>();
-        Stack myStack = GetComponent<Stack>();
+        Stack targetStack = _ingredient.HitObject.GetComponent<Stack>();
+        Stack currentStack = GetComponent<Stack>();
         
         Vector3 sideDown = new Vector3(
             transform.position.x, 
-            0.05f * stack.Childrens.Length + 0.05f * myStack.Childrens.Length, 
+            0.05f * targetStack.Childrens.Length + 0.05f * currentStack.Childrens.Length, 
             transform.position.z + transform.lossyScale.z / 2);
         
-        StartCoroutine(RotationAroundSide(sideDown, _ingredient.HitObject, Vector3.right, _flipSpeed.Value));
+        StartCoroutine(RotateAroundSide(sideDown, _ingredient.HitObject, Vector3.right, _flipSpeed.Value));
     }
 
     private void FlipLeft()
     {
         Debug.Log("About to Orbit");
 
-        if (!_ingredient.CanSwipeLeft /*|| GameManager.singleton.ingredientIsAnimating*/) { return; }
+        if (!_ingredient.CanFlipLeft || GameManager.Singleton.IngredientIsAnimating) { return; }
 
         Debug.Log("Orbiting");
 
-        Stack stack = _ingredient.HitObject.GetComponent<Stack>();
-        Stack myStack = GetComponent<Stack>();
+        Stack targetStack = _ingredient.HitObject.GetComponent<Stack>();
+        Stack currentStack = GetComponent<Stack>();
         
         Vector3 sideLeft = new Vector3(
             transform.position.x + transform.lossyScale.x / 2, 
-            0.05f * stack.Childrens.Length + 0.05f * myStack.Childrens.Length, 
+            0.05f * targetStack.Childrens.Length + 0.05f * currentStack.Childrens.Length, 
             transform.position.z);
         
-        StartCoroutine(RotationAroundSide(sideLeft, _ingredient.HitObject, Vector3.back, _flipSpeed.Value));
+        StartCoroutine(RotateAroundSide(sideLeft, _ingredient.HitObject, Vector3.back, _flipSpeed.Value));
     }
 
-    private IEnumerator RotationAroundSide(Vector3 point, GameObject hitObject, Vector3 axis, float flipSpeed)
+    private IEnumerator RotateAroundSide(Vector3 point, GameObject hitObject, Vector3 axis, float flipSpeed)
     {
         float degree = 0;
 

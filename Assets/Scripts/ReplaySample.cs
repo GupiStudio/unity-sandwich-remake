@@ -12,7 +12,6 @@ public class ReplaySample
     public Vector3 TargetPosition
     {
         get => _targetPosition;
-
         set
         {
             _targetPosition = value;
@@ -22,14 +21,13 @@ public class ReplaySample
     public Quaternion TargetRotation
     {
         get => _targetRotation;
-
         set
         {
             _targetRotation = value;
         }
     }
 
-    public ReplaySample (Transform targetIngredient, bool useLocals = false)
+    public ReplaySample(Transform targetIngredient, bool useLocals = false)
     {
         _targetIngredient = targetIngredient;
         _targetPosition = useLocals ? targetIngredient.localPosition : targetIngredient.position;

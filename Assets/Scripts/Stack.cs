@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Stack : MonoBehaviour
 {
@@ -17,21 +15,19 @@ public class Stack : MonoBehaviour
 
     void Start()
     {
-        Stack[] allStacksInObject = GetComponents<Stack>();
-        
-        for (int i = 0; i < allStacksInObject.Length; i++)
+        Stack[] stacks = GetComponents<Stack>();
+
+        foreach (Stack stack in stacks)
         {
-            if (allStacksInObject[i] != this)
-            {
-                Destroy(allStacksInObject[i]);
-            }
+            if (stack != this)
+                Destroy(stack);
         }
     }
 
     public void UpdateChildrens()
     {
         _childrens = GetComponentsInChildren<Transform>();
-        
+
         for (int i = 1; i < _childrens.Length; i++)
         {
             Destroy(_childrens[i].GetComponent<Stack>());

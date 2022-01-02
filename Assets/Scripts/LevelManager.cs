@@ -1,11 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private IntVariableSO _currentLevel;
-    [SerializeField] private GameObject[] _levels;
+    [SerializeField] private Tilemap[] _levels;
+
+    private void OnEnable() 
+    {
+        _currentLevel.Value = 0;
+    }
 
     private void Start()
     {
@@ -25,7 +29,7 @@ public class LevelManager : MonoBehaviour
         try
         {
             DeactivateLevels();
-            _levels[levelIndex].SetActive(true);
+            _levels[levelIndex].gameObject.SetActive(true);
 
             return true;
         }
@@ -42,7 +46,7 @@ public class LevelManager : MonoBehaviour
     {
         try
         {
-            return _levels[_currentLevel.Value].GetComponent<LevelReward>().CoinReward;
+            return _levels[_currentLevel.Value].GetComponent<Level>().CoinReward;
         }
         catch
         {
@@ -53,10 +57,10 @@ public class LevelManager : MonoBehaviour
 
     private void DeactivateLevels()
     {
-        foreach (GameObject level in _levels)
+        foreach (Tilemap level in _levels)
         {
-            if (level.activeSelf)
-                level.SetActive(false);
+            if (level.gameObject.activeSelf)
+                level.gameObject.SetActive(false);
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -92,6 +90,12 @@ public class GameManager : MonoBehaviour
         _uiController.ShowGameplayUI();
     }
 
+    public void SkipLevel()
+    {
+        _coinCount.Value -= 50;
+        LoadNextLevel();
+    }
+
     public void StartReplaySampling(Transform targetIngredient)
     {
         _recordingTarget = targetIngredient;
@@ -154,7 +158,7 @@ public class GameManager : MonoBehaviour
                 ResetReplaySamples();
 
                 //Resetting the stacks
-                GameObject[] allIngredients = GameObject.FindGameObjectsWithTag("Ingredients");
+                GameObject[] allIngredients = GameObject.FindGameObjectsWithTag("Ingredient");
                 
                 for (int i = 0; i < allIngredients.Length; i++)
                 {
