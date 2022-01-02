@@ -3,16 +3,16 @@ using UnityEngine;
 
 public abstract class FlipCommand
 {
-    protected Transform CurrentTransform;
-    protected Transform TargetTransform;
+    private readonly Ingredient _ingredient;
     protected float Duration;
 
-    public FlipCommand(ref Transform currentTransform, Transform targetTransform, float duration)
+    public FlipCommand(Ingredient ingredient, float duration)
     {
-        CurrentTransform = currentTransform;
-        TargetTransform = targetTransform;
+        _ingredient = ingredient;
         Duration = duration;
     }
+
+    protected Ingredient Ingredient => _ingredient;
 
     public abstract IEnumerator Execute();
 
@@ -24,9 +24,8 @@ public abstract class FlipCommand
         float progress = 0f;
         var endRotation = quaternion;
 
-        var ingredient = TargetTransform.gameObject.GetComponent<Ingredient>();
-        var hitObject = ingredient.HitObject;
-        var currentObject = CurrentTransform.gameObject;
+        var hitObject = _ingredient.HitObject;
+        var currentObject = _ingredient.gameObject;
 
         var currentPosition = currentObject.transform.position;
         var currentRotation = currentObject.transform.rotation;
@@ -34,11 +33,11 @@ public abstract class FlipCommand
         Stack targetStack = hitObject.GetComponent<Stack>();
         Stack currentStack = currentObject.GetComponent<Stack>();
 
-        var colliderSize = CurrentTransform.gameObject.GetComponent<BoxCollider>().size;
+        var collider = _ingredient.gameObject.GetComponent<BoxCollider>();
 
         var projectionPosition = new Vector3(
             0, 
-            colliderSize.y * currentStack.Childrens.Length +  colliderSize.y * targetStack.Childrens.Length,
+            collider.size.y * currentStack.Childrens.Length +  collider.size.y * targetStack.Childrens.Length,
             0);
         
         var adderVector = isUndo ? Vector3.zero : projectionPosition;
@@ -57,17 +56,19 @@ public abstract class FlipCommand
                 currentPosition, 
                 targetPosition, 
                 percent) + new Vector3(0, height, 0);
-            CurrentTransform.rotation = Quaternion.Lerp(currentRotation, endRotation, percent);
+
+            _ingredient.transform.rotation = Quaternion.Lerp(currentRotation, endRotation, percent);
             yield return null;
         }
 
         // make as child of target
         if (hitObject != null)
         {
-            CurrentTransform.parent = hitObject.transform;
+            _ingredient.transform.parent = hitObject.transform;
         }
 
-        // _collider.enabled = false;
+        collider.enabled = isUndo;
+
         yield return new WaitForSeconds(0.5f);
 
         hitObject.GetComponent<Stack>().UpdateStack();
@@ -82,8 +83,8 @@ public abstract class FlipCommand
 
 public class FlipUp : FlipCommand
 {
-    public FlipUp(ref Transform currentTransform, Transform targetTransform, float duration) :  
-        base(ref currentTransform, targetTransform, duration) {}
+    public FlipUp(Ingredient ingredient, float duration) :  
+        base(ingredient, duration) {}
 
     public override IEnumerator Execute()
     {
@@ -98,8 +99,8 @@ public class FlipUp : FlipCommand
 
 public class FlipRight : FlipCommand
 {
-    public FlipRight(ref Transform currentTransform, Transform targetTransform, float duration) :  
-        base(ref currentTransform, targetTransform, duration) {}
+    public FlipRight(Ingredient ingredient, float duration) :  
+        base(ingredient, duration) {}
 
     public override IEnumerator Execute()
     {
@@ -114,8 +115,8 @@ public class FlipRight : FlipCommand
 
 public class FlipDown : FlipCommand
 {
-    public FlipDown(ref Transform currentTransform, Transform targetTransform, float duration) :  
-        base(ref currentTransform, targetTransform, duration) {}
+    public FlipDown(Ingredient ingredient, float duration) :  
+        base(ingredient, duration) {}
 
     public override IEnumerator Execute()
     {
@@ -130,8 +131,8 @@ public class FlipDown : FlipCommand
 
 public class FlipLeft : FlipCommand
 {
-    public FlipLeft(ref Transform currentTransform, Transform targetTransform, float duration) :  
-        base(ref currentTransform, targetTransform, duration) {}
+    public FlipLeft(Ingredient ingredient, float duration) :  
+        base(ingredient, duration) {}
 
     public override IEnumerator Execute()
     {

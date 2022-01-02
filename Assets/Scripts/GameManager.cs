@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public float FlipDuration => _flipDuration.Value;
 
+    private List<FlipCommand> _flipHistory = new List<FlipCommand>();
+
     private void Awake()
     {
         Instance = this;
@@ -64,6 +66,8 @@ public class GameManager : MonoBehaviour
 
             _coinCount.Value += _levelManager.GetLevelCoinReward();
             _uiController.ShowWinScreenUI();
+            
+            ClearFlipHistory();
         }
         else
         {
@@ -82,5 +86,24 @@ public class GameManager : MonoBehaviour
     {
         _coinCount.Value -= 50;
         LoadNextLevel();
+    }
+
+    public void ClearFlipHistory()
+    {
+        _flipHistory.Clear();
+    }
+
+    public void RecordFlip(FlipCommand flip)
+    {
+        _flipHistory.Add(flip);
+    }
+
+    public void UndoFlip()
+    {
+        var lastFlip = _flipHistory[_flipHistory.Count - 1];
+
+        StartCoroutine(lastFlip.Undo());
+
+        _flipHistory.Remove(lastFlip);
     }
 }

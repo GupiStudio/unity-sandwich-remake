@@ -5,40 +5,43 @@ public class Flip
     private FlipCommand _command;
 
     public Flip(
+        Ingredient ingredient,
         SwipeDirection swipeDirection,
-        Transform currentTransform, 
-        Transform targetTransform, 
         float duration)
     {
         if (swipeDirection.IsUp)
         {
+            if (!ingredient.CanFlipUp) { return; }
+
             _command = new FlipUp(
-                ref currentTransform,
-                targetTransform,
+                ingredient,
                 duration
             );
         }
         else if (swipeDirection.IsRight)
         {
+            if (!ingredient.CanFlipRight) { return; }
+
             _command = new FlipRight(
-                ref currentTransform,
-                targetTransform,
+                ingredient,
                 duration
             );
         }
         else if (swipeDirection.IsDown)
         {
+            if (!ingredient.CanFlipDown) { return; }
+
             _command = new FlipDown(
-                ref currentTransform,
-                targetTransform,
+                ingredient,
                 duration
             );
         }
         else if (swipeDirection.IsLeft)
         {
+            if (!ingredient.CanFlipLeft) { return; }
+
             _command = new FlipLeft(
-                ref currentTransform,
-                targetTransform,
+                ingredient,
                 duration
             );
         }

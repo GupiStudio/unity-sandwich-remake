@@ -49,7 +49,7 @@ public class SwipeGesture : MonoBehaviour
 
             if (ingredient != null)
             {
-                ingredient.Flip(swipeDirection);
+                ingredient.Fold(swipeDirection);
             }
             else
             {
