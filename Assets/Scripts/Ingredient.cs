@@ -5,8 +5,8 @@ public class Ingredient : MonoBehaviour
     private float _maxDistance = 1.0f;
     private Collider _collider;
     private RaycastHit _hit;
+    
     private GameObject _hitObject;
-
     public GameObject HitObject => _hitObject;
 
     private void Awake() 
