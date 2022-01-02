@@ -14,14 +14,14 @@ public class Ingredient : MonoBehaviour
         _collider = GetComponent<Collider>();
     }
 
-    public bool CanFlipLeft
+    public bool CanFlipUp
     {
         get
         {
-            if(Physics.BoxCast(
+            if (Physics.BoxCast(
                 _collider.bounds.center, 
                 transform.localScale / 4, 
-                transform.right, 
+                transform.forward, 
                 out _hit, 
                 transform.rotation, 
                 _maxDistance))
@@ -43,29 +43,7 @@ public class Ingredient : MonoBehaviour
             if(Physics.BoxCast(
                 _collider.bounds.center, 
                 transform.localScale / 4, 
-                -transform.right, 
-                out _hit, 
-                transform.rotation, 
-                _maxDistance))
-            {
-                _hitObject = _hit.collider.transform.gameObject;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-
-    public bool CanFlipUp
-    {
-        get
-        {
-            if (Physics.BoxCast(
-                _collider.bounds.center, 
-                transform.localScale / 4, 
-                -transform.forward, 
+                transform.right, 
                 out _hit, 
                 transform.rotation, 
                 _maxDistance))
@@ -87,7 +65,29 @@ public class Ingredient : MonoBehaviour
             if (Physics.BoxCast(
                 _collider.bounds.center, 
                 transform.localScale / 4, 
-                transform.forward, 
+                -transform.forward, 
+                out _hit, 
+                transform.rotation, 
+                _maxDistance))
+            {
+                _hitObject = _hit.collider.transform.gameObject;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    public bool CanFlipLeft
+    {
+        get
+        {
+            if(Physics.BoxCast(
+                _collider.bounds.center, 
+                transform.localScale / 4, 
+                -transform.right, 
                 out _hit, 
                 transform.rotation, 
                 _maxDistance))

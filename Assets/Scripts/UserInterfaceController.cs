@@ -16,6 +16,11 @@ public class UserInterfaceController : MonoBehaviour
     [SerializeField] private IntVariableSO _levelCount;
     [SerializeField] private IntVariableSO _coinCount;
 
+    private void OnEnable() // temporary
+    {
+        _coinCount.Value = 0;
+    }
+
     private void Start()
     {
         ShowGameplayUI();
@@ -23,16 +28,16 @@ public class UserInterfaceController : MonoBehaviour
 
     public void ShowGameplayUI()
     {
-        _winScreenCanvas.enabled = false;
-        _gameplayCanvas.enabled = true;
+        _winScreenCanvas.gameObject.SetActive(false);
+        _gameplayCanvas.gameObject.SetActive(true);
 
         _levelCountText.text = $"Level {_levelCount.Value.ToString()}";
     }
 
     public void ShowWinScreenUI()
     {
-        _gameplayCanvas.enabled = false;
-        _winScreenCanvas.enabled = true;
+        _gameplayCanvas.gameObject.SetActive(false);
+        _winScreenCanvas.gameObject.SetActive(true);
 
         _coinCountText.text = $"Coin: {_coinCount.Value.ToString()}";
     }
