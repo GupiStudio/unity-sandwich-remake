@@ -19,8 +19,13 @@ public class SwipeGesture : MonoBehaviour
 
     private void Update()
     {
+        HandleSwipe();
+    }
+
+    private void HandleSwipe()
+    {
         if (!IsScreenTouched()) { return; }
-        
+
         Touch touch = Input.GetTouch(0);
 
         if (!IsTouchHit(touch.position, ref _hit)) { return; }
@@ -30,18 +35,18 @@ public class SwipeGesture : MonoBehaviour
         if (touch.phase == TouchPhase.Moved)
         {
             _endPosition = touch.position;
-            
+
             if (_endPosition == _startPosition) { return; }
-            
+
             if (_isSwiping) { return; }
-            
+
             var differencePosition = _startPosition - _endPosition;
             differencePosition.Normalize();
 
             var swipeDirection = new SwipeDirection(differencePosition, _minimumSwipeDistance.Value);
 
             var ingredient = _hit.transform.GetComponent<IngredientController>();
-            
+
             if (ingredient != null)
             {
                 ingredient.Flip(swipeDirection);
