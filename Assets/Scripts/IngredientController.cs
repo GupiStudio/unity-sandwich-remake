@@ -39,11 +39,7 @@ public class IngredientController : MonoBehaviour
 
     private void FlipUp()
     {
-        Debug.Log("About to Orbit");
-
         if (!_ingredient.CanFlipUp || GameManager.Singleton.IngredientIsAnimating) { return; }
-
-        Debug.Log("Orbiting");
 
         Stack targetStack = _ingredient.HitObject.GetComponent<Stack>();
         Stack currectStack = GetComponent<Stack>();
@@ -58,12 +54,8 @@ public class IngredientController : MonoBehaviour
 
     private void FlipRight()
     {
-        Debug.Log("About to Orbit");
-
         if (!_ingredient.CanFlipRight || GameManager.Singleton.IngredientIsAnimating) { return; }
 
-        Debug.Log("Orbiting");
-        
         Stack targetStack = _ingredient.HitObject.GetComponent<Stack>();
         Stack currentStack = GetComponent<Stack>();
 
@@ -77,11 +69,7 @@ public class IngredientController : MonoBehaviour
 
     private void FlipDown()
     {
-        Debug.Log("About to Orbit");
-
         if (!_ingredient.CanFlipDown || GameManager.Singleton.IngredientIsAnimating) { return; }
-
-        Debug.Log("Orbiting");
 
         Stack targetStack = _ingredient.HitObject.GetComponent<Stack>();
         Stack currentStack = GetComponent<Stack>();
@@ -96,11 +84,7 @@ public class IngredientController : MonoBehaviour
 
     private void FlipLeft()
     {
-        Debug.Log("About to Orbit");
-
         if (!_ingredient.CanFlipLeft || GameManager.Singleton.IngredientIsAnimating) { return; }
-
-        Debug.Log("Orbiting");
 
         Stack targetStack = _ingredient.HitObject.GetComponent<Stack>();
         Stack currentStack = GetComponent<Stack>();
