@@ -17,15 +17,6 @@ public class GameManager : MonoBehaviour
     private UserInterfaceController _uiController;
     private LevelManager _levelManager;
 
-    // Replay Vars
-    private List<ReplaySample> _replaySamples = new List<ReplaySample>();
-    private bool _sampleTheTransform;
-    private int _replayIndex;
-    private bool _doFirstReplayFrame;
-    private Transform _recordingTarget;
-
-    private bool _doOneRetry;
-
     public float FlipDuration => _flipDuration.Value;
 
     private void Awake()
@@ -45,12 +36,6 @@ public class GameManager : MonoBehaviour
     {
         _moreHeight = transform;
         _moreHeight.position = Vector3.zero;
-    }
-
-    private void FixedUpdate()
-    {
-        ReplaySampler();
-        RewindReplayPlayer();
     }
 
     public void FindStack()
@@ -97,77 +82,5 @@ public class GameManager : MonoBehaviour
     {
         _coinCount.Value -= 50;
         LoadNextLevel();
-    }
-
-    public void StartReplaySampling(Transform targetIngredient)
-    {
-        _recordingTarget = targetIngredient;
-        _sampleTheTransform = true;
-    }
-
-    public void StopReplaySamples()
-    {
-        _sampleTheTransform = false;
-    }
-
-    public void ResetReplaySamples()
-    {
-        _replaySamples.Clear();
-    }
-    
-    public void RewindReplay()
-    {
-        if (!_doOneRetry)
-        {
-            _doOneRetry = true;
-        }
-    }
-
-    private void ReplaySampler()
-    {
-        if (_sampleTheTransform)
-        {
-            _replaySamples.Add(new ReplaySample(_recordingTarget));
-        }
-    }
-
-    private void RewindReplayPlayer()
-    {
-        if (_doOneRetry)
-        {
-            if (!_doFirstReplayFrame)
-            {
-                _replayIndex = _replaySamples.Count - 1;
-                _doFirstReplayFrame = true;
-            }
-            if (_replayIndex >= 0)
-            {
-                Stack tempStack = _replaySamples[_replayIndex].TargetIngredient.GetComponent<Stack>();
-                if (tempStack != null)
-                {
-                    Destroy(tempStack);
-                }
-
-                _replaySamples[_replayIndex].TargetIngredient.parent = ParentIngredients;
-
-                _replaySamples[_replayIndex].SetIngredientToAllSampledProperties();
-
-                _replayIndex--;
-            }
-            else
-            {
-                ResetReplaySamples();
-
-                //Resetting the stacks
-                GameObject[] allIngredients = GameObject.FindGameObjectsWithTag("Ingredient");
-                
-                for (int i = 0; i < allIngredients.Length; i++)
-                {
-                    allIngredients[i].AddComponent<Stack>();
-                }
-                _doOneRetry = false;
-                _doFirstReplayFrame = false;
-            }
-        }
     }
 }

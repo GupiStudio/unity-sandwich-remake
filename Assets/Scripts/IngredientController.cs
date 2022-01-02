@@ -71,44 +71,6 @@ public class IngredientController : MonoBehaviour
         MoveTo(_ingredient.HitObject);
     }
 
-    private IEnumerator RotateAroundSide(Vector3 point, Vector3 axis, GameObject hitObject, float flipSpeed)
-    {
-        float degree = 0;
-
-        GameManager.Instance.IngredientIsAnimating = true;
-        
-        while (degree < 180)
-        {
-            GameManager.Instance.StartReplaySampling(transform);
-
-            transform.RotateAround(point, axis, flipSpeed * Time.deltaTime);
-            yield return new WaitForSeconds(Time.deltaTime);
-            degree = degree > 180 ? 180 : degree + flipSpeed * Time.deltaTime;
-        }
-        
-        transform.localEulerAngles = axis * -180;
-        GameManager.Instance.StopReplaySamples();
-        
-        // make as child of target
-        if (hitObject != null)
-        {
-            transform.parent = hitObject.transform;
-        }
-
-        _collider.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-
-        hitObject.GetComponent<Stack>().UpdateStack();
-
-        GameManager.Instance.IngredientIsAnimating = false;
-        
-        yield return new WaitForSeconds(1.0f);
-
-        GameManager.Instance.FindStack();
-
-        yield return null;
-    }
-
     // from Sandwich-Clone
 
     private Vector3 _currentPosition;
@@ -194,8 +156,6 @@ public class IngredientController : MonoBehaviour
 
         while(progress < duration)
         {
-            GameManager.Instance.StartReplaySampling(transform);
-
             progress += Time.deltaTime;
             var percent = Mathf.Clamp01(progress/duration);
             float height = (_jumpHeight) * Mathf.Sin(Mathf.PI * percent);
@@ -204,8 +164,6 @@ public class IngredientController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(_currentRotation, endRotation, percent);
             yield return null;
         }
-
-        GameManager.Instance.StopReplaySamples();
 
         // make as child of target
         if (hitObject != null)
